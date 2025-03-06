@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements CustomAdapter.OnP
 
         animalsManager = ((MyApplication) getApplicationContext()).getAnimalsManager();
         photoList = animalsManager.getAnimalList();
-        animalsManager.addAnimal("Sjiraff", R.drawable.sjiraff);
 
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -122,6 +121,13 @@ public class MainActivity extends AppCompatActivity implements CustomAdapter.OnP
         });
 
 
+    }
+
+    public void saveNewImage(Uri imageUri, String name) {
+        if (imageUri != null && !name.isEmpty()) {
+            animalsManager.addUserPhoto(name, imageUri); // ✅ Add to shared list
+            Toast.makeText(this, "Image added to quiz!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

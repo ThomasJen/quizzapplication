@@ -6,45 +6,46 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.example.quizapplication.MainActivity;
 public class AnimalsManager {
-    private List<Photo> animalList;
+    private final List<Photo> photoList;
     private static AnimalsManager instance;
 
-    public AnimalsManager() {
-        animalList = new ArrayList<>();
+    public AnimalsManager(List<Photo> photoList) {
+        this.photoList = photoList;
         initializeDefaultAnimals();
     }
 
-    public static AnimalsManager getInstance() {
-        if (instance == null) {
-            instance = new AnimalsManager();
-        }
-        return instance;
-    }
     public void initializeDefaultAnimals() {
         // Legg til standarddyr
-        animalList.add(new Photo("Tiger", R.drawable.tiger));
-        animalList.add(new Photo("Rev", R.drawable.rev));
-        animalList.add(new Photo("Gorilla", R.drawable.gorilla));
-
+        if(photoList.isEmpty()) {
+            photoList.add(new Photo("Tiger", R.drawable.tiger));
+            photoList.add(new Photo("Rev", R.drawable.rev));
+            photoList.add(new Photo("Gorilla", R.drawable.gorilla));
+            photoList.add(new Photo("Sjiraff", R.drawable.sjiraff));
+        }
     }
 
     public List<Photo> getAnimalList() {
-        return animalList;
+        return photoList;
     }
 
     public void addAnimal(String name, int imageResId) {
-        animalList.add(new Photo(name, imageResId));
+        photoList.add(new Photo(name, imageResId));
+    }
+
+    public void addUserPhoto(String name, Uri imageUri) {
+        photoList.add(new Photo(name, imageUri));
     }
 
     public void addAnimal(String name, Uri imageUri) {
-        animalList.add(new Photo(name,imageUri));
+        photoList.add(new Photo(name,imageUri));
     }
 
     public void shuffleAnimals() {
-        Collections.shuffle(animalList);
+        Collections.shuffle(photoList);
     }
     public void deleteItemFromList(Photo photo){
-        animalList.remove(photo);
+        photoList.remove(photo);
     }
 }

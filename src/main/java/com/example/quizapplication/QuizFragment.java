@@ -1,5 +1,7 @@
 package com.example.quizapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -50,7 +52,10 @@ public class QuizFragment extends Fragment {
 
 
         return inflater.inflate(R.layout.fragment_quiz, container, false);
+
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class QuizFragment extends Fragment {
         buttonNext = view.findViewById(R.id.buttonNext);
         btnBackToMain = view.findViewById(R.id.btnBackToMain);
 
-        AnimalsManager animalsManager = AnimalsManager.getInstance();
+        AnimalsManager animalsManager = ((MyApplication) requireActivity().getApplication()).getAnimalsManager();
         photoList = animalsManager.getAnimalList();
         animalsManager.shuffleAnimals();
 
