@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -124,10 +125,11 @@ public class MainActivity extends AppCompatActivity implements CustomAdapter.OnP
     }
 
     public void saveNewImage(Uri imageUri, String name) {
-        if (imageUri != null && !name.isEmpty()) {
-            animalsManager.addUserPhoto(name, imageUri); // ✅ Add to shared list
+        QuizViewModel quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
+        quizViewModel.addPhoto(name, imageUri.toString());
+         // ✅ Add to shared list
             Toast.makeText(this, "Image added to quiz!", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     /**

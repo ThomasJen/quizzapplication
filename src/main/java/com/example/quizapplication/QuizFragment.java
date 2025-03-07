@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +51,17 @@ public class QuizFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        return inflater.inflate(R.layout.fragment_quiz, container, false);
+        QuizViewModel quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
 
+        quizViewModel.getPhotoList().observe(getViewLifecycleOwner(), photos -> {
+            if(photos.size() < 0) {
+                displayNextQuestion(photos);
+            }
+        });
+
+        return view;
     }
 
 
@@ -82,7 +91,7 @@ public class QuizFragment extends Fragment {
         btnBackToMain.setOnClickListener(v -> requireActivity().finish());
         // Set up quiz logic here (e.g., loading a random question)
     }
-    private void displayNextQuestion() {
+    private void displayNextQuestion(List<PhotoEntity> photoList) {
         // Example: Setting an image and options
         Photo currentPhoto = null;
         if (currentIndex < photoList.size()) {
